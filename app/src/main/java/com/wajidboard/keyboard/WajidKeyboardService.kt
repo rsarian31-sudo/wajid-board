@@ -221,15 +221,15 @@ class WajidKeyboardService : InputMethodService() {
     }
 
     private fun probhatValue(ch: Char): String? {
-        val keyName = if (shifted) ch.uppercaseChar() else ch
-        val suffix = if (shifted) "AltGr" else "Normal"
-        val value = probhat?.optString("Key_${keyName}_${suffix}").orEmpty()
-        if (value.isNotEmpty()) return value
         if (shifted) {
-            val fallback = probhat?.optString("Key_${ch.uppercaseChar()}_Normal").orEmpty()
-            if (fallback.isNotEmpty()) return fallback
+            val altGr = probhat?.optString("Key_${ch}_AltGr").orEmpty()
+            if (altGr.isNotEmpty()) return altGr
+            val upper = probhat?.optString("Key_${ch.uppercaseChar()}_Normal").orEmpty()
+            if (upper.isNotEmpty()) return upper
+            return null
         }
-        return null
+        val normal = probhat?.optString("Key_${ch}_Normal").orEmpty()
+        return normal.ifEmpty { null }
     }
 
     private fun handleCharacter(ch: Char) {
