@@ -1,27 +1,35 @@
-# WAJID BOARD — private Android keyboard prototype
+# WAJID BOARD — private Android keyboard
 
-A personal, offline-first Android IME prototype for the owner's Samsung A55 5G.
+An offline-first personal Android keyboard for the owner's Samsung A55 5G.
 
-## Current prototype scope
-- Android system keyboard service (InputMethodService).
-- English QWERTY layout.
-- Bengali direct-key starter layout.
-- English-to-Bengali common-word replacement (small Avro-style starter dictionary; not a full Avro engine yet).
-- Number/symbol page, language toggle, backspace, enter, shift and light haptic feedback.
-- No INTERNET permission, analytics, telemetry, cloud sync or key logging.
+## Features in 0.2.0
+- Android InputMethodService with English QWERTY.
+- Avro Phonetic transliteration using the upstream OpenBangla Avro rule data and a Kotlin rule parser.
+- Probhat fixed layout using the upstream OpenBangla Probhat keymap data, including the alternate layer.
+- Clipboard panel: recent text copied while the keyboard is active, up to 10 entries / 3,000 characters each. History is in memory only and is cleared when the IME process is stopped; use Clear to empty it manually.
+- Rounded keycaps, Android ripple feedback, press-scale animation, and light haptics.
+- Offline; no INTERNET permission, analytics, telemetry, cloud sync, or key logging.
 
-## Important limitations
-This is source code v0.1.0, not a tested or signed APK. It has not been built on a real Android SDK or tested on a Samsung A55. Bengali direct-key layout and transliteration dictionary are starter implementations; they need proper Probhat mapping and a full phonetic engine before production use. Clipboard history, gesture typing, candidate prediction, advanced animations and theme settings are not implemented yet.
+## Important status
+This is source code version 0.2.0. It has not yet been built by GitHub Actions or tested on a physical Samsung device. Avro uses the official upstream rule table and adapted matching algorithm, but it still needs a real-device compatibility test against the Avro reference test corpus. Probhat keymap data is included; vowel composition/automatic kar joining may need further refinement. Clipboard history is intentionally session-only and does not persist after the keyboard process stops.
+
+## Use
+1. Install the APK after a successful Actions build.
+2. Enable WAJID BOARD in Android keyboard settings.
+3. Select it from the keyboard picker.
+4. Tap the top language selector to cycle EN → অভ্র → প্রভাত.
+5. In Avro mode, type romanized Bengali. Tap space to finish a word.
+6. Tap the clipboard icon to view recent copied text.
 
 ## Build
-Requires JDK 17, Android SDK 35 and Gradle 8.7.
+JDK 17, Android SDK 35 and Gradle 8.7.
 Run: `gradle :app:assembleDebug`
 APK: `app/build/outputs/apk/debug/app-debug.apk`
 
-A GitHub Actions workflow builds the debug APK on pushes to main or by manual dispatch. Download it from the workflow run's Artifacts section.
+GitHub Actions builds a debug APK on pushes to main or manual dispatch. Download the artifact from the workflow run.
 
 ## Privacy
-The app requests only VIBRATE; it does not request Internet access. The IME does not intentionally store or transmit typed content. Android displays its standard warning when enabling a third-party keyboard.
+The app requests VIBRATE only. Clipboard content is read by the active keyboard to populate its local in-memory history. It is not written to persistent storage or sent over a network. Android shows its standard third-party keyboard privacy warning.
 
-## Credits
-This prototype is newly written and does not copy Orbit Board's private v1.3.9 code. Orbit Board's public repository states that its public source is available through v1.0.8. If its source is incorporated later, preserve its license notices and comply with applicable terms.
+## Licensing and attribution
+See `LICENSE` and `THIRD_PARTY_NOTICES.md`. Avro phonetic and Probhat layout assets are from OpenBangla Keyboard, with their original attribution and GPL-3.0 licensing preserved. The adapted Avro parser is based on the OpenBangla AvroPhonetic implementation (dual-licensed MPL-2.0 / GPL-3.0).
