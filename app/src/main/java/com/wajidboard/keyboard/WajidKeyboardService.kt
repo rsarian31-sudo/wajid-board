@@ -57,9 +57,16 @@ class WajidKeyboardService : InputMethodService() {
             setPadding(7, 8, 7, 8)
             setBackgroundColor(bg)
         }
-        clipboardManager?.addPrimaryClipChangedListener(clipboardListener!!)
         renderKeyboard()
         return root!!
+    }
+
+    override fun onStartInputView(info: EditorInfo?, restarting: Boolean) {
+        super.onStartInputView(info, restarting)
+        clipboardListener?.let {
+            clipboardManager?.removePrimaryClipChangedListener(it)
+            clipboardManager?.addPrimaryClipChangedListener(it)
+        }
     }
 
     override fun onStartInput(attribute: EditorInfo?, restarting: Boolean) {
