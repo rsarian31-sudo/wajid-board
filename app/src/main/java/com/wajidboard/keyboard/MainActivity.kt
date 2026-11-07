@@ -29,7 +29,7 @@ class MainActivity : Activity() {
             gravity = Gravity.CENTER
         }, match())
         root.addView(TextView(this).apply {
-            text = "Avro Phonetic  •  Probhat  •  Clipboard"
+            text = "Avro • Probhat • Clipboard • Smooth keys"
             textSize = 14f
             setTextColor(Color.LTGRAY)
             gravity = Gravity.CENTER
@@ -43,7 +43,7 @@ class MainActivity : Activity() {
             imm.showInputMethodPicker()
         })
         root.addView(TextView(this).apply {
-            text = "HOW TO USE\nOpen any text box. Tap the top language key to cycle EN → অভ্র → প্রভাত. In Avro mode, type Bangla with English letters. In Probhat mode, use the mapped Bengali keys. Tap 📋 to view recent copied text. Clipboard history is kept only in memory while the keyboard service is running; Clear removes the visible history.\n\nPRIVACY\nNo Internet permission, analytics, cloud sync or key logging. Avro and Probhat work offline. Clipboard text is read only by the active keyboard and is not uploaded."
+            text = "PRIVACY\nOffline-first. No Internet permission, analytics, cloud sync or keystroke collection. Clipboard history is held temporarily in memory while the keyboard is active and is not uploaded."
             textSize = 14f
             setTextColor(Color.LTGRAY)
             setPadding(0, 28, 0, 0)
@@ -51,13 +51,18 @@ class MainActivity : Activity() {
         setContentView(root)
     }
 
-    private fun match() = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+    private fun match() = LinearLayout.LayoutParams(
+        ViewGroup.LayoutParams.MATCH_PARENT,
+        ViewGroup.LayoutParams.WRAP_CONTENT
+    )
+
     private fun actionButton(label: String, action: () -> Unit) = Button(this).apply {
         text = label
         isAllCaps = false
         setOnClickListener { action() }
-        layoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT).apply {
-            topMargin = 12
-        }
+        layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        ).apply { topMargin = 12 }
     }
 }
